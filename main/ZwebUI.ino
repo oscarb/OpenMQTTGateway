@@ -625,8 +625,8 @@ void handleWI() {
       return;
 
     } else if (server.hasArg("save")) {
-      StaticJsonDocument<JSON_MSG_BUFFER> jsonBuffer;
-      JsonObject WEBtoSYS = jsonBuffer.to<JsonObject>();
+      StaticJsonDocument<JSON_MSG_BUFFER> WEBtoSYSBuffer;
+      JsonObject WEBtoSYS = WEBtoSYSBuffer.to<JsonObject>();
       bool update = false;
       if (server.hasArg("s1")) {
         WEBtoSYS["wifi_ssid"] = server.arg("s1");
@@ -707,8 +707,8 @@ void handleMQ() {
       WEBUI_TRACE_LOG(F("handleMQ Arg: %d, %s=%s" CR), i, server.argName(i).c_str(), server.arg(i).c_str());
     }
     if (server.hasArg("save")) {
-      StaticJsonDocument<JSON_MSG_BUFFER> jsonBuffer;
-      JsonObject WEBtoSYS = jsonBuffer.to<JsonObject>();
+      StaticJsonDocument<JSON_MSG_BUFFER> WEBtoSYSBuffer;
+      JsonObject WEBtoSYS = WEBtoSYSBuffer.to<JsonObject>();
       bool update = false;
 
       if (server.hasArg("mh")) {
@@ -1499,7 +1499,6 @@ void MQTTtoWebUI(char* topicOri, JsonObject& WebUIdata) { // json object decodin
     if (success) {
       stateWebUIStatus();
     } else {
-      // pub(subjectWebUItoMQTT, "{\"Status\": \"Error\"}"); // Fail feedback
       Log.error(F("[ WebUI ] MQTTtoWebUI Fail json" CR), WebUIdata);
     }
   }
@@ -1507,8 +1506,8 @@ void MQTTtoWebUI(char* topicOri, JsonObject& WebUIdata) { // json object decodin
 
 String stateWebUIStatus() {
   //Publish display state
-  StaticJsonDocument<JSON_MSG_BUFFER> jsonBuffer;
-  JsonObject WebUIdata = jsonBuffer.to<JsonObject>();
+  StaticJsonDocument<JSON_MSG_BUFFER> WebUIdataBuffer;
+  JsonObject WebUIdata = WebUIdataBuffer.to<JsonObject>();
   WebUIdata["displayMetric"] = (bool)displayMetric;
   WebUIdata["webUISecure"] = (bool)webUISecure;
   WebUIdata["displayQueue"] = uxQueueMessagesWaiting(webUIQueue);
@@ -1517,7 +1516,8 @@ String stateWebUIStatus() {
   serializeJson(WebUIdata, output);
 
   // WebUIdata["currentMessage"] = currentWebUIMessage;
-  pub(subjectWebUItoMQTT, WebUIdata);
+  WebUIdata["origin"] = subjectWebUItoMQTT;
+  enqueueJsonObject(WebUIdata);
   return output;
 }
 
