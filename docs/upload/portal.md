@@ -26,7 +26,7 @@ Once connected to the WiFi, a web page should appear. On Android, you may also h
 * Set your MQTT Server password (optional)
 * Set your MQTT base topic if you need to change it (you must keep the / at the end) (default: home/)
 * Set your gateway name if you need to change it
-* Set your Over The Air password `ota_password`, this password is used for local and remote OTA - it is also the password being used for the WebUI login. (default: OTAPASSWORD)
+* Set your password, this password is used for local and remote OTA - it is also the password being used for the WebUI login. (default: OTAPASSWORD)
 
 * Click on save
 

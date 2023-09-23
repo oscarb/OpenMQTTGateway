@@ -212,7 +212,7 @@ char mqtt_user[parameters_size + 1] = MQTT_USER; // not compulsory only if your 
 char mqtt_pass[parameters_size + 1] = MQTT_PASS; // not compulsory only if your broker needs authentication
 char mqtt_server[parameters_size + 1] = MQTT_SERVER;
 char mqtt_port[6] = MQTT_PORT;
-char ota_pass[parameters_size + 1] = ota_password;
+char ota_pass[parameters_size + 1] = PASSWORD;
 #ifdef USE_MAC_AS_GATEWAY_NAME
 #  undef WifiManager_ssid
 #  undef ota_hostname
@@ -1582,7 +1582,7 @@ void setup_wifimanager(bool reset_settings) {
   WiFiManagerParameter custom_mqtt_secure("secure", "mqtt secure", "1", 2, mqtt_secure ? "type=\"checkbox\" checked" : "type=\"checkbox\"");
   WiFiManagerParameter custom_mqtt_cert("cert", "<br/>mqtt broker cert", mqtt_cert.c_str(), 4096);
   WiFiManagerParameter custom_gateway_name("name", "gateway name", gateway_name, parameters_size);
-  WiFiManagerParameter custom_ota_pass("ota", "ota password", ota_pass, parameters_size);
+  WiFiManagerParameter custom_ota_pass("ota", "password", ota_pass, parameters_size);
 #  endif
   //WiFiManager
   //Local intialization. Once its business is done, there is no need to keep it around

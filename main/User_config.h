@@ -408,8 +408,8 @@ int lowpowermode = DEFAULT_LOW_POWER_MODE;
 #ifndef ota_hostname
 #  define ota_hostname Gateway_Name
 #endif
-#ifndef ota_password
-#  define ota_password "OTAPASSWORD"
+#ifndef PASSWORD
+#  define PASSWORD "OTAPASSWORD"
 #endif
 #ifndef ota_port
 #  define ota_port 8266
